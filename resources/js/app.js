@@ -15,6 +15,8 @@ Vue.component('login-form',require('./components/loginForm.vue').default);
 Vue.component('nav-bar',require('./components/navbar.vue').default);
 Vue.component('side-bar',require('./components/sidebar.vue').default);
 Vue.component('footer-body',require('./components/footer.vue').default);
+Vue.component('dashboard-layout',require('./components/dashboard.vue').default);
+Vue.component('category-create',require('./components/category.vue').default);
 // .. end blade component registration
 window.onload = function () {
     var main = new Vue({

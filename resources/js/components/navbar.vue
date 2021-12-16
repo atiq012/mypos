@@ -1,5 +1,6 @@
 <template>
- <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<div>
+     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -58,6 +59,7 @@
 
     </ul>
 </nav>
+</div>
 </template>
 <script>
 import Button from '../../../vendor/laravel/breeze/stubs/inertia-vue/resources/js/Components/Button.vue';

@@ -23,13 +23,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         return view('categories');
     });
 
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
-
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    Route::get('create/category',function(){
+        return view('admin.category');
+    });
 
 });
 require __DIR__.'/auth.php';

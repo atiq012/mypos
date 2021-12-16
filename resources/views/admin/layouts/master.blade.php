@@ -36,7 +36,7 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div id="app">
-
+        
         <div class="wrapper">
 
             <nav-bar></nav-bar>
