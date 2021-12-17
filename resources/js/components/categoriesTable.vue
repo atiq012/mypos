@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="container mt-5">
+    <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <table class="table table-dark table-striped table-hover">
+          <table class="table table-light table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col">#</th>

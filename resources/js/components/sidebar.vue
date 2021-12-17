@@ -9,7 +9,9 @@
                         <!-- <img src="public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">admin</a>
+                        <div v-if="user">
+                            <a href="#" class="d-block">{{ user.name }}</a>
+                        </div>
                     </div>
                 </div>
 
@@ -71,3 +73,18 @@
         </aside>
     </div>
 </template>
+<script>
+export default {
+    data() {
+    return {
+      user: null,
+    };
+  },
+  mounted(){
+    axios.get('/admin/is-auth')
+   .then(response => {       
+     this.user = response.data;
+   });
+  }
+}
+</script>

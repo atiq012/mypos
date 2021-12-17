@@ -216,3 +216,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  mounted(){
+    axios.get('is-auth')
+   .then(response => {
+     this.user = response.data;
+   });
+  }
+}
+</script>

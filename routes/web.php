@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,12 @@ Route::get('/', function () {
 
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    Route::get('is-auth', function () {
+        $auth = Auth::user();
+        return $auth;
+    });
+
     Route::get('/category', function () {
         return view('categories');
     });
