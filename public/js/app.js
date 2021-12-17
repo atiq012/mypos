@@ -8784,12 +8784,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       title: "",
       slug: "",
-      categories: ""
+      categories: "",
+      isLoading: false
     };
   },
   created: function created() {
@@ -8807,8 +8812,13 @@ __webpack_require__.r(__webpack_exports__);
         slug: this.slug // post data to database
 
       }).then(function (response) {
+        _this.isLoading = false;
+
         _this.fetchTasks(); // fetch data without page load using method
 
+
+        _this.title = '';
+        _this.slug = '';
       })["catch"](function (error) {
         _this.isLoading = false;
 
@@ -33051,7 +33061,21 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _c("div", { staticClass: "card-footer" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [
+                    _vm._v("Submit "),
+                    _vm.isLoading
+                      ? _c("span", {
+                          staticClass: "spinner-border spinner-sm",
+                          staticStyle: { margin: "-9px 7px" },
+                        })
+                      : _vm._e(),
+                  ]
+                ),
+              ]),
             ]),
           ]),
         ]),
@@ -33073,7 +33097,7 @@ var render = function () {
                           "table table-light table-striped table-hover",
                       },
                       [
-                        _vm._m(3),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -33135,18 +33159,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h3", [_vm._v("Create New Category")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Submit")]
-      ),
     ])
   },
   function () {

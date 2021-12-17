@@ -58,7 +58,11 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit <span
+                      v-if="isLoading"
+                      class="spinner-border spinner-sm"
+                      style="margin: -9px 7px"
+                    ></span></button>
               </div>
             </form>
           </div>
@@ -106,6 +110,7 @@ export default {
       title: "",
       slug: "",
       categories: "",
+      isLoading: false,
     };
   },
   created() {
@@ -123,8 +128,10 @@ export default {
           // post data to database
         })
         .then((response) => {
-          this.fetchTasks()
-          // fetch data without page load using method
+          this.isLoading = false;
+          this.fetchTasks(); // fetch data without page load using method
+          this.title = '';
+          this.slug = '';
         })
         .catch((error) => {
           this.isLoading = false;
