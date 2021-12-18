@@ -8858,8 +8858,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.fetchTasks(); // define method name for call initial load
-
-    this.editfetchTasks();
   },
   methods: {
     addNewCategory: function addNewCategory(e) {
@@ -8893,42 +8891,30 @@ __webpack_require__.r(__webpack_exports__);
         _this2.categories = response.data; // fetch all categories in page load 1st time
       });
     },
-    editfetchTasks: function editfetchTasks() {
+    openModal: function openModal(id) {
       var _this3 = this;
 
-      axios.get("/api/category").then(function (response) {
-        _this3.categories = response.data; // fetch all categories in page load 1st time
-      });
-    },
-    openModal: function openModal(id) {
-      var _this4 = this;
-
       axios.get("/api/category/" + id).then(function (response) {
-        return _this4.update_list = response.data;
+        return _this3.update_list = response.data;
       });
       $("#EditModal").modal("show");
       this.myModal = true;
     },
     editCategory: function editCategory(category) {
-      var _this5 = this;
+      var _this4 = this;
 
       this.isLoadingEdit = true;
-      var currentObj = this; // alert(this.update_list.slug);
-
+      var currentObj = this;
       axios.put("/api/update/category/" + category, {
         title: this.update_list.title,
         slug: this.update_list.slug // post data to database
 
       }).then(function (response) {
-        _this5.isLoadingEdit = false;
-
-        _this5.editfetchTasks(); // fetch data without page load using method
-
+        _this4.isLoadingEdit = false;
       })["catch"](function (error) {
-        alert(error);
-        _this5.isLoadingEdit = false;
+        _this4.isLoadingEdit = false;
 
-        _this5.$swal("Invalid.");
+        _this4.$swal("Invalid.");
       });
     }
   }

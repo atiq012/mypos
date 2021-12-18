@@ -175,7 +175,7 @@ export default {
   
   created() {
     this.fetchTasks(); // define method name for call initial load
-    this.editfetchTasks();
+    
   },
   methods: {
     addNewCategory(e) {
@@ -206,13 +206,7 @@ export default {
         // fetch all categories in page load 1st time
       })
     },
-    editfetchTasks() {
-      axios.get("/api/category")
-        .then((response) => {        
-        this.categories = response.data;
-        // fetch all categories in page load 1st time
-      })
-    },
+    
     openModal(id) {
       axios.get("/api/category/" + id)
         .then((response) => (this.update_list = response.data));
@@ -222,19 +216,16 @@ export default {
     editCategory(category) {
       this.isLoadingEdit = true;
       let currentObj = this;
-      // alert(this.update_list.slug);
+      
       axios.put("/api/update/category/"+ category, {
           title: this.update_list.title,
           slug: this.update_list.slug,
           // post data to database
         })
         .then((response) => {
-          this.isLoadingEdit = false;
-          this.editfetchTasks(); // fetch data without page load using method
-          
+          this.isLoadingEdit = false;          
         })
         .catch((error) => {
-          alert(error);
           this.isLoadingEdit = false;
           this.$swal("Invalid.");
         });
