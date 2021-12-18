@@ -90,6 +90,63 @@
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ category.title }}</td>
                           <td>{{ category.slug }}</td>
+                          <td><button class="btn btn-sm btn-warning" @click="openModal(category.id)">Edit</button></td>
+                          <!-- Modal -->
+                            <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ update_list.title }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                    <form @submit="editCategory(update_list.id)">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            <div class="form-group">
+                                              <label for="Title">Category Title</label>
+                                              <input
+                                                type="text"
+                                                class="form-control"
+                                                id="title"
+                                                v-model="update_list.title"
+                                               
+                                                placeholder="Enter Category Title"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div class="col-md-12">
+                                            <div class="form-group">
+                                              <label for="slig">Category Slug</label>
+                                              <input
+                                                type="text"
+                                                class="form-control"
+                                                id="slug"
+                                                
+                                                v-model="update_list.slug"
+                                                placeholder="Enter Category Slug"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div class="col-md-12"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="sumit" class="btn btn-primary">Submit <span
+                                                v-if="isLoadingEdit"
+                                                class="spinner-border spinner-sm"
+                                                style="margin: -9px 7px"
+                                              ></span></button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          <!--End Modal -->
+
                         </tr>
                       </tbody>
                     </table>
@@ -111,10 +168,14 @@ export default {
       slug: "",
       categories: "",
       isLoading: false,
+      update_list:'',
+      isLoadingEdit: false
     };
   },
+  
   created() {
-    this.fetchTasks(); // define method name for without load page
+    this.fetchTasks(); // define method name for call initial load
+    this.editfetchTasks();
   },
   methods: {
     addNewCategory(e) {
@@ -144,6 +205,39 @@ export default {
         this.categories = response.data;
         // fetch all categories in page load 1st time
       })
+    },
+    editfetchTasks() {
+      axios.get("/api/category")
+        .then((response) => {        
+        this.categories = response.data;
+        // fetch all categories in page load 1st time
+      })
+    },
+    openModal(id) {
+      axios.get("/api/category/" + id)
+        .then((response) => (this.update_list = response.data));
+      $("#EditModal").modal("show");
+      this.myModal = true;
+    },
+    editCategory(category) {
+      this.isLoadingEdit = true;
+      let currentObj = this;
+      // alert(this.update_list.slug);
+      axios.put("/api/update/category/"+ category, {
+          title: this.update_list.title,
+          slug: this.update_list.slug,
+          // post data to database
+        })
+        .then((response) => {
+          this.isLoadingEdit = false;
+          this.editfetchTasks(); // fetch data without page load using method
+          
+        })
+        .catch((error) => {
+          alert(error);
+          this.isLoadingEdit = false;
+          this.$swal("Invalid.");
+        });
     },
   },
 };

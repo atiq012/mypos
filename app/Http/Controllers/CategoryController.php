@@ -27,6 +27,7 @@ class CategoryController extends Controller
 
     public function update(Category $category,Request $request)
     {
+        
         $data = $category->update($request->all());
 
         return response()->json($category, 202);

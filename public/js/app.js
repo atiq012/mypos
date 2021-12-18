@@ -8788,17 +8788,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       title: "",
       slug: "",
       categories: "",
-      isLoading: false
+      isLoading: false,
+      update_list: '',
+      isLoadingEdit: false
     };
   },
   created: function created() {
-    this.fetchTasks(); // define method name for without load page
+    this.fetchTasks(); // define method name for call initial load
+
+    this.editfetchTasks();
   },
   methods: {
     addNewCategory: function addNewCategory(e) {
@@ -8830,6 +8891,44 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/category").then(function (response) {
         _this2.categories = response.data; // fetch all categories in page load 1st time
+      });
+    },
+    editfetchTasks: function editfetchTasks() {
+      var _this3 = this;
+
+      axios.get("/api/category").then(function (response) {
+        _this3.categories = response.data; // fetch all categories in page load 1st time
+      });
+    },
+    openModal: function openModal(id) {
+      var _this4 = this;
+
+      axios.get("/api/category/" + id).then(function (response) {
+        return _this4.update_list = response.data;
+      });
+      $("#EditModal").modal("show");
+      this.myModal = true;
+    },
+    editCategory: function editCategory(category) {
+      var _this5 = this;
+
+      this.isLoadingEdit = true;
+      var currentObj = this; // alert(this.update_list.slug);
+
+      axios.put("/api/update/category/" + category, {
+        title: this.update_list.title,
+        slug: this.update_list.slug // post data to database
+
+      }).then(function (response) {
+        _this5.isLoadingEdit = false;
+
+        _this5.editfetchTasks(); // fetch data without page load using method
+
+      })["catch"](function (error) {
+        alert(error);
+        _this5.isLoadingEdit = false;
+
+        _this5.$swal("Invalid.");
       });
     }
   }
@@ -33110,6 +33209,306 @@ var render = function () {
                               _c("td", [_vm._v(_vm._s(category.title))]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(category.slug))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-sm btn-warning",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.openModal(category.id)
+                                      },
+                                    },
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "EditModal",
+                                    tabindex: "-1",
+                                    role: "dialog",
+                                    "aria-labelledby": "exampleModalLabel",
+                                    "aria-hidden": "true",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "modal-dialog",
+                                      attrs: { role: "document" },
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-header" },
+                                            [
+                                              _c(
+                                                "h5",
+                                                {
+                                                  staticClass: "modal-title",
+                                                  attrs: {
+                                                    id: "exampleModalLabel",
+                                                  },
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.update_list.title
+                                                    )
+                                                  ),
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._m(3, true),
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "form",
+                                            {
+                                              on: {
+                                                submit: function ($event) {
+                                                  return _vm.editCategory(
+                                                    _vm.update_list.id
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                { staticClass: "modal-body" },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "row" },
+                                                    [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "col-md-12",
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "form-group",
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  attrs: {
+                                                                    for: "Title",
+                                                                  },
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Category Title"
+                                                                  ),
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c("input", {
+                                                                directives: [
+                                                                  {
+                                                                    name: "model",
+                                                                    rawName:
+                                                                      "v-model",
+                                                                    value:
+                                                                      _vm
+                                                                        .update_list
+                                                                        .title,
+                                                                    expression:
+                                                                      "update_list.title",
+                                                                  },
+                                                                ],
+                                                                staticClass:
+                                                                  "form-control",
+                                                                attrs: {
+                                                                  type: "text",
+                                                                  id: "title",
+                                                                  placeholder:
+                                                                    "Enter Category Title",
+                                                                },
+                                                                domProps: {
+                                                                  value:
+                                                                    _vm
+                                                                      .update_list
+                                                                      .title,
+                                                                },
+                                                                on: {
+                                                                  input:
+                                                                    function (
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.update_list,
+                                                                        "title",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    },
+                                                                },
+                                                              }),
+                                                            ]
+                                                          ),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "col-md-12",
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "form-group",
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  attrs: {
+                                                                    for: "slig",
+                                                                  },
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Category Slug"
+                                                                  ),
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c("input", {
+                                                                directives: [
+                                                                  {
+                                                                    name: "model",
+                                                                    rawName:
+                                                                      "v-model",
+                                                                    value:
+                                                                      _vm
+                                                                        .update_list
+                                                                        .slug,
+                                                                    expression:
+                                                                      "update_list.slug",
+                                                                  },
+                                                                ],
+                                                                staticClass:
+                                                                  "form-control",
+                                                                attrs: {
+                                                                  type: "text",
+                                                                  id: "slug",
+                                                                  placeholder:
+                                                                    "Enter Category Slug",
+                                                                },
+                                                                domProps: {
+                                                                  value:
+                                                                    _vm
+                                                                      .update_list
+                                                                      .slug,
+                                                                },
+                                                                on: {
+                                                                  input:
+                                                                    function (
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.update_list,
+                                                                        "slug",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    },
+                                                                },
+                                                              }),
+                                                            ]
+                                                          ),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("div", {
+                                                        staticClass:
+                                                          "col-md-12",
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "modal-footer",
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-primary",
+                                                          attrs: {
+                                                            type: "sumit",
+                                                          },
+                                                        },
+                                                        [
+                                                          _vm._v("Submit "),
+                                                          _vm.isLoadingEdit
+                                                            ? _c("span", {
+                                                                staticClass:
+                                                                  "spinner-border spinner-sm",
+                                                                staticStyle: {
+                                                                  margin:
+                                                                    "-9px 7px",
+                                                                },
+                                                              })
+                                                            : _vm._e(),
+                                                        ]
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              ),
                             ])
                           }),
                           0
@@ -33174,6 +33573,23 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Slug")]),
       ]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close",
+        },
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
 ]
 render._withStripped = true
