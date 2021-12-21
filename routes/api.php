@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('category', 'CategoryController@index')->name('category');
+
 Route::get('category/{category}', 'CategoryController@view')->name('view');
 Route::post('create/category', 'CategoryController@create')->name('create');
 Route::put('update/category/{category}', 'CategoryController@update')->name('update');
