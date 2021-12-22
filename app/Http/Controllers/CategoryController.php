@@ -14,11 +14,6 @@ class CategoryController extends Controller
         return response()->json($data, 200);
     }
 
-    public function test()
-    {
-        dd('test');
-    }
-
     public function create(Request $request)
     {
         $data = Category::create($request->all());
